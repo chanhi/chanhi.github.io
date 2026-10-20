@@ -1,0 +1,59 @@
+# 메인 페이지(프로필 겸 이력) 데이터
+
+name: 정찬희
+nameEn: Chanhuy Jeong
+role: AI · Backend Developer
+tagline: LLM 에이전트와 RAG로 산업 현장의 문제를 풀고 있는 개발자입니다.
+avatar: # 예: /assets/profile.png (content/assets/profile.png 에 이미지 추가)
+
+about: |
+  ICNIT에서 섬유산업 특화 RAG 멀티에이전트 챗봇을 개발하고, LLM 평가·관측(Observability)과 산업 온톨로지를 연구하고 있습니다.
+
+  "Just Do!!" — 일단 만들어 보고, 부딪힌 문제와 배운 점을 기록하는 것을 좋아합니다. 이 블로그에는 개발하면서 배운 것, 학교에서 공부한 CS 지식, 프로젝트 회고를 정리합니다.
+
+links:
+  - label: GitHub
+    href: https://github.com/chanhi
+  - label: Blog
+    href: /develop/
+  - label: Tistory
+    href: https://chanhuy.tistory.com
+
+experience:
+  - org: ICNIT
+    title: 사원
+    period: 2026.07 – 현재
+    description: AI 연구 및 웹 서비스 개발
+    items:
+      - 섬유산업 특화 RAG 멀티에이전트 챗봇 개발 (FastAPI · LangGraph · MCP · Langfuse)
+      - LLM 평가 파이프라인 설계 (RAGAS · DeepEval · LLM-as-a-Judge)
+      - 산업 온톨로지 · AAS(IEC 63278) · 디지털 트윈 기술 조사
+      - 산업 협회·채용 포털 웹사이트 유지보수 및 신규 페이지 개발 (ASP.NET)
+
+education:
+  - org: 경기대학교
+    major: 컴퓨터공학 전공
+    period: 2025.03 – 2027.02
+    description: 기초·심화 캡스톤디자인(ATe, RealFit), 오픈소스SW 프로젝트
+  - org: 동양미래대학교
+    major: 컴퓨터소프트웨어공학 전공
+    period: 2020.03 – 2025.02
+    description: 졸업작품(MGM), 웹 프로그래밍(JSP·Vue), IOT(아두이노, RPi), 데이터 분석 프로젝트
+
+skills:
+  - group: AI · LLM
+    items: [LangGraph, RAG, MCP, Langfuse, RAGAS, DeepEval, Claude Code]
+  - group: Backend · DB
+    items: [Python, FastAPI, Django, Java, MySQL, PostgreSQL, Prisma]
+  - group: Frontend
+    items: [TypeScript, React, Next.js, Vue.js, Tailwind CSS]
+  - group: Infra · Tools
+    items: [Docker, Linux, Raspberry Pi, Git, Naver Cloud]
+
+certificates:
+  - name: 정보처리기사
+    issuer: 한국산업인력공단
+    date: 2026.09 
+  - name: CSTS(SW테스트전문가)
+    issuer: 한국정보통신기술협회
+    date: 2025.07 
