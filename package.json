@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "npx serve out",
     "import:tistory": "node scripts/import-tistory.mjs",
+    "check:sensitive": "node scripts/check-sensitive.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

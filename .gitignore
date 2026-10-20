@@ -8,3 +8,4 @@ next-env.d.ts
 content/.obsidian/workspace*.json
 content/.obsidian/plugins/
 content/.obsidian/cache
+.claude/settings.local.json
