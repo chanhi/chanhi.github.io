@@ -6,6 +6,7 @@ subcategory: agent
 tags: [Flue, 에이전트, Cloudflare, TypeScript]
 aliases: [Flue, Flue Framework]
 summary: Astro 제작진이 만든 Flue로 에이전트를 정의하고, HTTP API·Hook·React·관측성까지 연결하는 방법을 정리했습니다.
+source: 기술-연구/AI/Flue.md
 ---
 
 > [!summary]

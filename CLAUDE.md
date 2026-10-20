@@ -20,6 +20,7 @@ npm run build        # out/ 에 정적 사이트 생성 (prebuild로 assets 복�
 npm start            # out/ 미리보기 (npx serve out)
 npm run typecheck    # tsc --noEmit
 npm run import:tistory -- --from 1 --to 80   # Tistory 이관 (--force 덮어쓰기, --links-only 내부 링크만 변환)
+npm run check:sensitive -- <파일...>          # 게시 전 민감정보 검사 (금지어는 ~/.claude/publish-denylist.txt)
 ```
 
 테스트·린트 설정은 없다. 변경 검증은 `npm run typecheck`와 `npm run build` 성공 여부로 한다.
@@ -51,7 +52,7 @@ npm run import:tistory -- --from 1 --to 80   # Tistory 이관 (--force 덮어쓰
 ### 정적 export 제약
 
 - 모든 동적 라우트는 `generateStaticParams` + `dynamicParams = false`를 쓴다. 결과가 비면 빌드가 실패하므로 `_empty` placeholder로 대체하고 `notFound()` 처리한다.
-- `searchParams`를 쓸 수 없다. 하위 카테고리 필터와 페이지네이션은 클라이언트 컴포넌트 `PostList.tsx`가 `?sub=`, `?page=`를 직접 읽는다.
+- 서버에서 `searchParams`를 쓸 수 없다. 하위 카테고리 필터와 페이지네이션은 클라이언트 컴포넌트 `PostList.tsx`가 `useSearchParams`로 `?sub=`, `?page=`를 읽는다. 같은 경로에서 쿼리만 바뀌어도 갱신되려면 URL을 상태의 기준으로 써야 한다. `useSearchParams`는 Suspense 경계가 필요하고, 빌드 HTML에는 fallback(전체 목록 1페이지)이 들어간다.
 - Route handler(`rss.xml`, `search-index.json`)와 `sitemap.ts`, `robots.ts`는 `dynamic = "force-static"`이 필요하다.
 - `(blog)` 라우트 그룹이 사이드바 레이아웃을 제공한다. 홈(`/`)은 사이드바 없는 이력서 페이지다.
 
@@ -63,7 +64,10 @@ npm run import:tistory -- --from 1 --to 80   # Tistory 이관 (--force 덮어쓰
 
 ## 콘텐츠 작성 규칙
 
-- **frontmatter**: `title, slug(영문 권장), date, subcategory, tags, series, seriesOrder, summary, thumbnail, draft`
+- **Obsidian 노트 게시는 `publish-note` 스킬로 한다** (`.claude/skills/publish-note/SKILL.md`). 이 저장소에서 회사 관련 글을 직접 쓰지 않는다. 노트를 정제한 뒤 포스트를 만들거나 갱신하고, 커밋·push는 매번 사용자 승인을 받는다.
+- **공개 저장소이므로** 고객사명·사내 시스템명은 이 저장소의 어떤 파일(스킬·스크립트 포함)에도 적지 않는다. 구체적인 금지어는 `~/.claude/publish-denylist.txt`에만 둔다.
+- **frontmatter**: `title, slug(영문 권장), date, updated, subcategory, tags, aliases, series, seriesOrder, summary, thumbnail, draft, source`
+  - `source`: vault 기준 원본 노트 상대 경로(예: `기술-연구/AI/Flue.md`). 다시 게시할 때 기존 포스트를 찾는 키이고, 사이트 렌더링에는 쓰지 않는다.
   - 포트폴리오 추가 필드: `period, role, team, stack[], type(company|school|personal), github, demo, featured, order`
   - 템플릿: `content/templates/post.md`
 - **이미지**: 모두 `content/assets/`에 둔다. Obsidian vault 설정(`content/.obsidian/app.json`)이 첨부 폴더를 여기로 지정한다.
