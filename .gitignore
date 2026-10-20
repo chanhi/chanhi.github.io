@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+public/assets/
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+content/.obsidian/workspace*.json
+content/.obsidian/plugins/
+content/.obsidian/cache
