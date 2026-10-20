@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useMemo } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { PostMeta } from "@/lib/content";
 import type { SubCategory } from "@/config/site";
@@ -14,31 +15,42 @@ type Props = {
   showCategory?: boolean;
 };
 
-/** 하위 카테고리 탭 + 페이지네이션. 정적 export이므로 클라이언트에서 처리하고 ?sub= / ?page= 와 동기화 */
-export function PostList({ posts, subcategories = [], perPage, showCategory }: Props) {
-  const [sub, setSub] = useState("all");
-  const [page, setPage] = useState(1);
+/**
+ * 하위 카테고리 탭 + 페이지네이션. 정적 export이므로 클라이언트에서 ?sub= / ?page= 를 읽는다.
+ * useSearchParams는 Suspense 경계가 필요하므로, 빌드 시 HTML에는 fallback(전체 목록 1페이지)이 들어간다.
+ */
+export function PostList(props: Props) {
+  return (
+    <Suspense fallback={<PostListView {...props} sub="all" page={1} />}>
+      <PostListWithParams {...props} />
+    </Suspense>
+  );
+}
 
-  useEffect(() => {
-    const read = () => {
-      const params = new URLSearchParams(window.location.search);
-      setSub(params.get("sub") ?? "all");
-      setPage(Number(params.get("page") ?? 1) || 1);
-    };
-    read();
-    window.addEventListener("popstate", read);
-    return () => window.removeEventListener("popstate", read);
-  }, []);
+function PostListWithParams(props: Props) {
+  // 사이드바 링크처럼 같은 경로에서 쿼리만 바뀌어도 다시 렌더링되도록 URL을 상태의 기준으로 사용
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const sub = searchParams.get("sub") ?? "all";
+  const page = Number(searchParams.get("page") ?? 1) || 1;
 
   const update = (nextSub: string, nextPage: number) => {
-    setSub(nextSub);
-    setPage(nextPage);
     const params = new URLSearchParams();
     if (nextSub !== "all") params.set("sub", nextSub);
     if (nextPage > 1) params.set("page", String(nextPage));
     const qs = params.toString();
-    window.history.pushState(null, "", qs ? `?${qs}` : window.location.pathname);
+    router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
+
+  return <PostListView {...props} sub={sub} page={page} onChange={update} />;
+}
+
+type ViewProps = Props & { sub: string; page: number; onChange?: (sub: string, page: number) => void };
+
+function PostListView({ posts, subcategories = [], perPage, showCategory, sub, page, onChange }: ViewProps) {
+  const update = (nextSub: string, nextPage: number) => onChange?.(nextSub, nextPage);
 
   const tabs = subcategories
     .map((s) => ({ ...s, count: posts.filter((p) => p.subcategory === s.slug).length }))
