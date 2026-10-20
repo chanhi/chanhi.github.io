@@ -12,15 +12,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 명령어
 
-Node가 PATH에 없을 수 있다. Bash에서는 `export PATH="/c/Program Files/nodejs:$PATH"`를 먼저 실행한다.
-
 ```bash
 npm run dev          # 개발 서버 (predev로 content/assets → public/assets 복사)
 npm run build        # out/ 에 정적 사이트 생성 (prebuild로 assets 복사)
 npm start            # out/ 미리보기 (npx serve out)
 npm run typecheck    # tsc --noEmit
 npm run import:tistory -- --from 1 --to 80   # Tistory 이관 (--force 덮어쓰기, --links-only 내부 링크만 변환)
-npm run check:sensitive -- <파일...>          # 게시 전 민감정보 검사 (금지어는 ~/.claude/publish-denylist.txt)
+npm run check:sensitive -- <파일...>          # 게시 전 민감정보 검사 (금지어 목록: ~/.claude/publish-denylist.txt, PUBLISH_DENYLIST로 변경)
 ```
 
 테스트·린트 설정은 없다. 변경 검증은 `npm run typecheck`와 `npm run build` 성공 여부로 한다.
@@ -64,15 +62,11 @@ npm run check:sensitive -- <파일...>          # 게시 전 민감정보 검사
 
 ## 콘텐츠 작성 규칙
 
-- **Obsidian 노트 게시는 `publish-note` 스킬로 한다** (`.claude/skills/publish-note/SKILL.md`). 이 저장소에서 회사 관련 글을 직접 쓰지 않는다. 노트를 정제한 뒤 포스트를 만들거나 갱신하고, 커밋·push는 매번 사용자 승인을 받는다.
-- **공개 저장소이므로** 고객사명·사내 시스템명은 이 저장소의 어떤 파일(스킬·스크립트 포함)에도 적지 않는다. 구체적인 금지어는 `~/.claude/publish-denylist.txt`에만 둔다.
+- **공개 저장소**다. 개인정보나 외부에 공개하면 안 되는 이름·주소를 어떤 파일에도 적지 않는다.
 - **frontmatter**: `title, slug(영문 권장), date, updated, subcategory, tags, aliases, series, seriesOrder, summary, thumbnail, draft, source`
-  - `source`: vault 기준 원본 노트 상대 경로(예: `기술-연구/AI/Flue.md`). 다시 게시할 때 기존 포스트를 찾는 키이고, 사이트 렌더링에는 쓰지 않는다.
+  - `source`: 외부 노트에서 옮겨 온 글의 원본 경로. 다시 옮길 때 기존 포스트를 찾는 키이고, 사이트 렌더링에는 쓰지 않는다.
   - 포트폴리오 추가 필드: `period, role, team, stack[], type(company|school|personal), github, demo, featured, order`
   - 템플릿: `content/templates/post.md`
 - **이미지**: 모두 `content/assets/`에 둔다. Obsidian vault 설정(`content/.obsidian/app.json`)이 첨부 폴더를 여기로 지정한다.
 - **Excalidraw**: SVG export 파일이 `assets`에 있어야 표시된다.
-- **회사(ICNIT) 관련 공개 범위**: 회사 프로젝트는 게시하지 않는다. Research 글은 사내 vault의 `기술-연구/` 폴더 내용만 쓴다.
-  - 쓰기 전에 내부 IP·포트, DB·서비스명, 고객사명, 사내 수치, 프로젝트 고유 함수명을 제거한다.
-  - 원본 vault(`C:\Users\LG\Documents\icnit`)는 읽기 전용으로만 다룬다.
 - **팀 프로젝트 포트폴리오**: 팀원 실명·학번·연락처는 넣지 않는다.
