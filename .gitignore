@@ -9,3 +9,5 @@ content/.obsidian/workspace*.json
 content/.obsidian/plugins/
 content/.obsidian/cache
 .claude/settings.local.json
+.claude/skills/publish-note/
+CLAUDE.local.md
