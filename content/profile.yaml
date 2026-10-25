@@ -38,7 +38,14 @@ education:
   - org: 동양미래대학교
     major: 컴퓨터소프트웨어공학 전공
     period: 2020.03 – 2025.02
-    description: 졸업작품(MGM), 웹 프로그래밍(JSP·Vue), IOT(아두이노, RPi), 데이터 분석 프로젝트
+    description: 학점 4.35/4.5 · 졸업작품(MGM), 웹 프로그래밍(JSP·Vue), IOT(아두이노, RPi), 데이터 분석 프로젝트
+
+activities:
+  - name: PSB Academy 싱가포르 스터디투어
+    period: 2023.06 – 2023.07
+    description: 동양미래대학교 주관 해외 연수, 팀 영어 프로젝트 발표
+  - name: 육군 정보통신운용병
+    description: 병역 · 만기전역
 
 skills:
   - group: AI · LLM
@@ -50,10 +57,27 @@ skills:
   - group: Infra · Tools
     items: [Docker, Linux, Raspberry Pi, Git, Naver Cloud]
 
+awards:
+  - name: 캡스톤디자인 경진대회 우수상
+    issuer: 경기대학교
+    date: 2026.06
+    description: 심화 캡스톤디자인 · RealFit
+  - name: 캡스톤디자인 경진대회 장려상
+    issuer: 경기대학교
+    date: 2026.06
+    description: 기초 캡스톤디자인 · ATe
+  - name: SW 개발 경진대회 우수상
+    issuer: 동양미래대학교
+    date: 2024.12
+    description: 졸업작품 · MGM(원격 스마트팜)
+
 certificates:
   - name: 정보처리기사
     issuer: 한국산업인력공단
-    date: 2026.09 
+    date: 2026.09
   - name: CSTS(SW테스트전문가)
     issuer: 한국정보통신기술협회
-    date: 2025.07 
+    date: 2025.07
+  - name: TOPCIT 수준 3 (645점)
+    issuer: 정보통신기획평가원
+    date: 2025.05

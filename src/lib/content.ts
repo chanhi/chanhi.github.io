@@ -272,6 +272,8 @@ export type Profile = {
   education: { org: string; major?: string; period: string; description?: string }[];
   skills: { group: string; items: string[] }[];
   certificates: { name: string; issuer?: string; date: string }[];
+  awards?: { name: string; issuer?: string; date: string; description?: string }[];
+  activities?: { name: string; period?: string; description?: string }[];
 };
 
 export function getProfile(): Profile {

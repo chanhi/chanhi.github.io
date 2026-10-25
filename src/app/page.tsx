@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Award, BookOpen, Briefcase, GraduationCap, Rss, Wrench } from "lucide-react";
+import { ArrowUpRight, Award, BookOpen, Briefcase, Flag, GraduationCap, Rss, Trophy, Wrench } from "lucide-react";
 import { getAllPosts, getAllProjects, getProfile, toMeta, toProjectMeta } from "@/lib/content";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/icons";
@@ -133,6 +133,21 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* Activities */}
+      {!!profile.activities?.length && (
+        <Section id="activities" icon={Flag} title="Activities">
+          <div className="grid gap-4 sm:grid-cols-2">
+            {profile.activities.map((a) => (
+              <div key={a.name} className="card-brutal p-5">
+                {a.period && <p className="font-mono text-sm text-muted-foreground">{a.period}</p>}
+                <h3 className="mt-1 text-lg font-bold">{a.name}</h3>
+                {a.description && <p className="mt-2 text-sm text-muted-foreground">{a.description}</p>}
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
       {/* Skills */}
       <Section id="skills" icon={Wrench} title="Skills">
         <div className="grid gap-4 sm:grid-cols-2">
@@ -169,6 +184,24 @@ export default function HomePage() {
               <ProjectCard key={p.slug} project={p} />
             ))}
           </div>
+        </Section>
+      )}
+
+      {/* Awards */}
+      {!!profile.awards?.length && (
+        <Section id="awards" icon={Trophy} title="Awards">
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {profile.awards.map((a) => (
+              <li key={`${a.name}-${a.date}`} className="card-brutal flex items-center justify-between gap-3 p-4">
+                <div>
+                  <p className="font-bold">{a.name}</p>
+                  {a.issuer && <p className="text-sm text-muted-foreground">{a.issuer}</p>}
+                  {a.description && <p className="text-sm text-muted-foreground">{a.description}</p>}
+                </div>
+                <span className="shrink-0 font-mono text-sm text-muted-foreground">{a.date}</span>
+              </li>
+            ))}
+          </ul>
         </Section>
       )}
 
