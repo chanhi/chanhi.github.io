@@ -2,8 +2,8 @@
 title: MGM(멀티그린마스터) — 원격 스마트팜 웹 서비스
 slug: mgm
 aliases: [MGM, 멀티그린마스터]
-summary: 웹에서 게임하듯 실제 식물을 키우는 스마트팜 서비스입니다. 실시간 스트리밍과 원격 제어, 재배 일기, 게시판, 친구 기능을 갖춘 웹 서비스를 React와 Spring Boot로 만들고 라즈베리파이 스마트팜과 연동했습니다. 동양미래대 졸업작품입니다.
-period: 2024.06 – 2024.11
+summary: 웹에서 게임하듯 실제 식물을 키우는 스마트팜 서비스입니다. 실시간 스트리밍과 원격 제어, 재배 일기, 게시판, 친구 기능을 갖춘 웹 서비스를 React와 Spring Boot로 만들고 라즈베리파이 스마트팜과 연동했습니다. 동양미래대 졸업작품으로, SW 개발 경진대회에서 우수상을 받았습니다.
+period: 2024.03 – 2024.11
 role: 프론트엔드 · 백엔드 API 설계/개발
 team: 4인 팀 (꽃인 줄 알았어요)
 stack: [React, Chakra UI, TanStack Query, Axios, Spring Boot, Spring Data JPA, MySQL, Raspberry Pi, UDP]
