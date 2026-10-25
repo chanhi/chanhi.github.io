@@ -6,7 +6,7 @@ subcategory: data-structure
 tags: [자료구조, C, 연결 리스트, 이진 트리, 이진 탐색 트리, 힙, 우선순위 큐]
 summary: C 포인터로 단순 연결 리스트와 이진 트리를 만들고, 배열 기반 최대 힙으로 우선순위 큐를 구현하는 과정을 정리합니다.
 source: "D:/KGU/4-1/자료구조/기말/week9-연결리스트, D:/KGU/4-1/자료구조/기말/week10-트리, D:/KGU/4-1/자료구조/기말/week11-트리-힙"
-draft: true
+draft: false
 ---
 
 ## 개요

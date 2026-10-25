@@ -6,7 +6,7 @@ subcategory: network
 tags: [Network, Socket, TCP, UDP, Python, Thread]
 summary: Python socket 모듈로 TCP 에코 서버·클라이언트를 만들고, 스레드로 여러 클라이언트를 받는 서버와 UDP 브로드캐스트까지 정리했습니다.
 source: D:/DongYang/2-2자료/소켓/중간/소켓중간정리.docx
-draft: true
+draft: false
 ---
 
 ## 개요

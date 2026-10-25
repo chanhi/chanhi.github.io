@@ -6,7 +6,7 @@ subcategory: system
 tags: [System Software, Assembler, SIC, C, Linux]
 summary: SIC 머신용 2-pass 어셈블러를 C로 8단계에 걸쳐 만들면서 LOCCTR·SYMTAB·OPTAB과 H/T/E 목적 프로그램 레코드를 구현한 과정을 정리했습니다.
 source: D:/KGU/3-2/SS/Assembler_SIC/8
-draft: true
+draft: false
 ---
 
 ## 개요

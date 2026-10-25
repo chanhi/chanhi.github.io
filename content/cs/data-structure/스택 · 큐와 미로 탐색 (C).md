@@ -6,7 +6,7 @@ subcategory: data-structure
 tags: [자료구조, C, 배열 리스트, 스택, 큐, 원형 큐, 미로 탐색, DFS]
 summary: C로 배열 리스트·스택·원형 큐를 직접 구현하고, 스택으로 미로를 깊이 우선 탐색하는 과정까지 정리합니다.
 source: "D:/KGU/4-1/자료구조/arrlist, D:/KGU/4-1/자료구조/miro-code (1), D:/DongYang/1-2자료/자료구조"
-draft: true
+draft: false
 ---
 
 ## 개요

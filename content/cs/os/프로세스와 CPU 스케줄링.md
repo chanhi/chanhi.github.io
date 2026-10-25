@@ -6,7 +6,7 @@ subcategory: os
 tags: [OS, Process, CPU Scheduling, FCFS, SJF, Round Robin]
 summary: 프로세스 상태 전이부터 FCFS·SJF·SRTF·우선순위·RR 스케줄링까지 간트 차트와 평균 대기 시간 계산으로 비교합니다.
 source: D:\KGU\3-1\os중간2.docx
-draft: true
+draft: false
 ---
 
 ## 개요

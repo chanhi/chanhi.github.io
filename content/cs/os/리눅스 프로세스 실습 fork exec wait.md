@@ -6,7 +6,7 @@ subcategory: os
 tags: [OS, Linux, Process, fork, exec, wait, Zombie Process]
 summary: 리눅스에서 fork·exec·wait로 프로세스를 만들고 바꾸고 회수하는 과정을 C 예제로 실습하고, 좀비·고아 프로세스와 ps·jobs·kill 같은 관리 명령을 함께 정리합니다.
 source: D:\DongYang\1-2자료\운영체제\OS.txt
-draft: true
+draft: false
 ---
 
 ## 개요

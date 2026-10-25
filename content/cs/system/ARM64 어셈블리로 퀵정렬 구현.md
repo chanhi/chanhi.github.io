@@ -6,7 +6,7 @@ subcategory: system
 tags: [Computer Architecture, ARM64, AArch64, Assembly, Quick Sort]
 summary: C로 된 퀵정렬을 ARM64(LEGv8 표기) 어셈블리로 옮기면서 레지스터 사용 규약, 스택 프레임, 재귀 호출을 어떻게 처리했는지 정리했습니다.
 source: D:/KGU/4-1/컴퓨터구조/과제/homework6.s
-draft: true
+draft: false
 ---
 
 ## 개요
