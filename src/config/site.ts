@@ -63,9 +63,11 @@ export const categories: Category[] = [
     color: "chart-5",
     subcategories: [
       { slug: "algorithm", label: "Algorithm" },
+      { slug: "data-structure", label: "자료구조" },
       { slug: "database", label: "Database" },
       { slug: "os", label: "Operating System" },
       { slug: "network", label: "Network" },
+      { slug: "system", label: "시스템 · 컴퓨터구조" },
       { slug: "lecture", label: "강의 노트" },
     ],
   },
