@@ -127,7 +127,9 @@ flowchart LR
 | Tripo3D / TripoSR | 빠름 | 보통 | 내부 블랙박스 |
 | CRM (Convolutional Reconstruction Model) | 보통 | 매우 우수 | 멀티뷰 가능 |
 
-최종적으로 **Tripo3D를 API로 연동**해 VTON 결과 이미지를 `.glb`로 만들었습니다. AI 서버의 3D 단계는 프론트엔드 진행률 표시와 에러 처리를 위해 **두 엔드포인트로 나눴습니다.**
+처음에는 멀티뷰로 앞뒷면을 함께 재구성할 수 있는 **CRM으로 양면 렌더링**을 시도했습니다. 하지만 CUDA와 라이브러리 의존성 충돌이 자주 났고, 프로젝트에서 쓰던 PyTorch 버전과도 맞출 수 없었습니다. 그래서 현실적인 대안으로 **Tripo3D를 API로 연동**해 VTON 결과 이미지를 `.glb`로 만들었습니다.
+
+AI 서버의 3D 단계는 프론트엔드 진행률 표시와 에러 처리를 위해 **두 엔드포인트로 나눴습니다.**
 
 - `POST /ai/tripo/generate`: VTON 이미지로 초기 3D 객체 생성
 - `POST /ai/tripo/apply-mesh`: 생성된 객체에 사용자 체형(메쉬) 데이터 반영
