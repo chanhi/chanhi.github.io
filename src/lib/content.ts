@@ -40,6 +40,8 @@ export type ProjectMeta = {
   type: "company" | "school" | "personal";
   github?: string;
   demo?: string;
+  /** Google Play 설치 링크 */
+  playstore?: string;
   thumbnail?: string;
   featured: boolean;
   order: number;
@@ -231,6 +233,7 @@ export function getAllProjects(): Project[] {
         type: (["company", "school", "personal"].includes(data.type) ? data.type : "personal") as Project["type"],
         github: data.github ? String(data.github) : undefined,
         demo: data.demo ? String(data.demo) : undefined,
+        playstore: data.playstore ? String(data.playstore) : undefined,
         thumbnail: data.thumbnail ? (resolveAsset(String(data.thumbnail)) ?? String(data.thumbnail)) : undefined,
         featured: data.featured === true,
         order: Number(data.order ?? 100),

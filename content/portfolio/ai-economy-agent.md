@@ -8,6 +8,7 @@ team: 1인 (개인 프로젝트)
 stack: [Python, Google Gemini API, gemini-embedding-001, ChromaDB, SQLite, FastAPI, Uvicorn, ngrok, Kotlin, Jetpack Compose, Retrofit, yfinance, Alpha Vantage, feedparser, trafilatura, uv, Discord Webhook, Raspberry Pi, crontab]
 type: personal
 github: https://github.com/chanhi/ai-economy-agent
+playstore: https://play.google.com/store/apps/details?id=com.aistudio.dailymacro.kdmrq
 thumbnail: daily-macro-report-banner.png
 featured: true
 order: 22
@@ -29,7 +30,7 @@ order: 22
 - **RAG 주간 결산**: 테마 추출(I)이 이번 주 핵심 키워드를 뽑으면, 전략가(G)가 Vector DB에서 관련 기사를 찾아 테마별 주간 리포트를 씁니다.
 - **모바일 연동 API**: FastAPI로 `/api/report/today`, `/api/search`(의미 기반 검색)를 제공하고, ngrok 고정 도메인으로 외부에 노출합니다.
 - **보안과 방어 로직**: API Key 인증, 프롬프트 인젝션 방어, HTML escaping(XSS 방어), 입력 길이 제한을 적용했습니다.
-- **Android 앱 (Daily Macro Report)**: 일간·주간 리포트 뷰어, 의미 기반 검색, 검색 결과 원문 보기를 제공합니다.
+- **Android 앱 (Daily Macro Report)**: 일간·주간 리포트 뷰어, 의미 기반 검색, 검색 결과 원문 보기를 제공합니다. Google Play에 출시했습니다.
 - **운영 자동화**: crontab으로 주 5일 실행하고, Discord Webhook으로 알림을 보내며, 리포트를 연-월 폴더로 나눠 저장합니다.
 
 ## 아키텍처
@@ -63,6 +64,8 @@ flowchart TD
 ![[daily-macro-report-icon.png|120]]
 
 에이전트가 만든 리포트를 휴대폰에서 바로 보려고 만든 뷰어 앱입니다. Google AI Studio로 초안을 만들고 Kotlin · Jetpack Compose로 다듬었습니다.
+
+Google Play에 출시했습니다. 👉 [Google Play에서 설치하기](https://play.google.com/store/apps/details?id=com.aistudio.dailymacro.kdmrq)
 
 <p align="center">
   <img src="/assets/portfolio/daily-macro-report-daily.png" alt="일일 리포트 화면" width="300" loading="lazy" />
@@ -112,7 +115,7 @@ flowchart TD
 - **동적 키워드**: 고정 검색어를 쓰지 않고 데스크 에이전트가 그날의 핵심 키워드를 뽑게 해서, 예상 못 한 이슈도 놓치지 않게 했습니다.
 - **안정화**: 에이전트 응답 정규화와 파싱 함수를 넣었고, 파일명 특수문자를 치환했으며, 무인 운영 중 생긴 버그를 고쳤습니다.
 - **Vector DB와 RAG 검색**을 추가해 주간 리포트 품질을 개선했습니다.
-- **Android 앱**을 만들어 API를 실제로 쓰는 클라이언트까지 연결했습니다.
+- **Android 앱**을 만들어 API를 실제로 쓰는 클라이언트까지 연결하고, Google Play에 출시했습니다.
 
 ## 배운 점
 

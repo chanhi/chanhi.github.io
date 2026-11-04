@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar, ExternalLink, User, Users } from "lucide-react";
+import { ArrowLeft, Calendar, ExternalLink, Smartphone, User, Users } from "lucide-react";
 import { getAllProjects, getProject } from "@/lib/content";
 import { renderMarkdown } from "@/lib/markdown";
 import { cn } from "@/lib/utils";
@@ -74,7 +74,7 @@ export default async function ProjectPage({ params }: Props) {
             ))}
           </div>
 
-          {(project.github || project.demo) && (
+          {(project.github || project.demo || project.playstore) && (
             <div className="mt-5 flex flex-wrap gap-2">
               {project.github && (
                 <a
@@ -94,6 +94,16 @@ export default async function ProjectPage({ params }: Props) {
                   className="inline-flex items-center gap-2 rounded-md border-2 border-border bg-card px-3 py-1.5 text-sm font-semibold hover-lift"
                 >
                   <ExternalLink className="size-4" /> Demo
+                </a>
+              )}
+              {project.playstore && (
+                <a
+                  href={project.playstore}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md border-2 border-border bg-chart-5 px-3 py-1.5 text-sm font-semibold text-black hover-lift"
+                >
+                  <Smartphone className="size-4" /> Google Play
                 </a>
               )}
             </div>
