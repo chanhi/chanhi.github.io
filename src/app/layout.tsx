@@ -23,6 +23,8 @@ export const metadata: Metadata = {
     description: siteConfig.description,
   },
   alternates: { types: { "application/rss+xml": "/rss.xml" } },
+  // AI 학습 이용 거부 의사 표시 (noai: 일부 플랫폼 관례, tdm-reservation: W3C TDMRep 텍스트·데이터 마이닝 권리 유보)
+  other: { robots: "noai, noimageai", "tdm-reservation": "1" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
