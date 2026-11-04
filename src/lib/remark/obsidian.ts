@@ -2,7 +2,7 @@ import type { Root, PhrasingContent, Text, Code, Image } from "mdast";
 import { visit, SKIP } from "unist-util-visit";
 import GithubSlugger from "github-slugger";
 import { bundledLanguages } from "shiki";
-import { resolveAsset, resolveWikiLink } from "@/lib/content";
+import { getAllTags, resolveAsset, resolveWikiLink } from "@/lib/content";
 import { tagHref } from "@/lib/utils";
 
 const IMAGE_EXT = /\.(png|jpe?g|gif|webp|svg|avif|bmp)$/i;
@@ -54,7 +54,7 @@ function embed(inner: string): PhrasingContent {
   return { type: "link", url, children: [{ type: "text", value: `📎 ${file}` }] };
 }
 
-function splitText(node: Text): PhrasingContent[] | null {
+function splitText(node: Text, knownTags: Set<string>): PhrasingContent[] | null {
   const value = node.value;
   const out: PhrasingContent[] = [];
   let last = 0;
@@ -70,7 +70,9 @@ function splitText(node: Text): PhrasingContent[] | null {
     else if (mark !== undefined) out.push({ type: "html", value: `<mark>${escapeHtml(mark)}</mark>` });
     else if (tag !== undefined) {
       if (pre) out.push({ type: "text", value: pre });
-      out.push({ type: "link", url: tagHref(tag), children: [{ type: "text", value: `#${tag}` }] });
+      // 태그 페이지는 frontmatter tags로만 생성되므로, 없는 태그(예: "Fixes #이슈번호")는 링크 없이 텍스트로 둔다
+      if (knownTags.has(tag)) out.push({ type: "link", url: tagHref(tag), children: [{ type: "text", value: `#${tag}` }] });
+      else out.push({ type: "text", value: `#${tag}` });
     }
     // 그 외: ^block-id → 제거
     last = start + whole.length;
@@ -83,9 +85,10 @@ function splitText(node: Text): PhrasingContent[] | null {
 /** Obsidian 문법 → 표준 mdast */
 export default function remarkObsidian() {
   return (tree: Root) => {
+    const knownTags = new Set(getAllTags().map(([t]) => t));
     visit(tree, "text", (node, index, parent) => {
       if (!parent || index === undefined || parent.type === "link") return;
-      const replaced = splitText(node);
+      const replaced = splitText(node, knownTags);
       if (!replaced) return;
       parent.children.splice(index, 1, ...(replaced as typeof parent.children));
       return [SKIP, index + replaced.length];
