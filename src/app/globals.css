@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -169,6 +170,24 @@
   --tracking-wide: calc(var(--tracking-normal) + 0.025em);
   --tracking-wider: calc(var(--tracking-normal) + 0.05em);
   --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
 }
 
 @layer base {
@@ -261,7 +280,20 @@
 
 /* ───────────── 코드 블록 (rehype-pretty-code) ───────────── */
 .prose figure[data-rehype-pretty-code-figure] {
-  @apply my-6;
+  @apply relative my-6;
+}
+/* 코드 블록 복사 버튼 (CodeCopyButtons가 figure 안에 삽입). 마우스를 올리거나 포커스하면 표시 */
+.prose figure .code-copy {
+  @apply absolute right-2 bottom-2 opacity-0 transition-opacity;
+}
+.prose figure:hover .code-copy,
+.prose figure .code-copy:focus-within {
+  @apply opacity-100;
+}
+@media (hover: none) {
+  .prose figure .code-copy {
+    @apply opacity-100;
+  }
 }
 .prose pre {
   @apply overflow-x-auto rounded-lg border-2 border-border p-4 font-mono text-sm leading-relaxed;

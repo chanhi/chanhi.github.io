@@ -1,10 +1,16 @@
 import Link from "next/link";
 import { ArrowUpRight, Award, BookOpen, Briefcase, Flag, GraduationCap, Rss, Trophy, Wrench } from "lucide-react";
-import { getAllPosts, getAllProjects, getProfile, toMeta, toProjectMeta } from "@/lib/content";
+import { getAllPosts, getAllProjects, getAllTags, getProfile, toMeta, toProjectMeta } from "@/lib/content";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/icons";
 import { PostCard } from "@/components/PostCard";
 import { ProjectCard } from "@/components/ProjectCard";
+import { BlurFade } from "@/components/ui/blur-fade";
+import { DotPattern } from "@/components/ui/dot-pattern";
+import { Marquee } from "@/components/ui/marquee";
+import { NumberTicker } from "@/components/ui/number-ticker";
+import { WordRotate } from "@/components/ui/word-rotate";
+import { cn } from "@/lib/utils";
 
 function Section({ id, icon: Icon, title, action, children }: {
   id: string;
@@ -14,16 +20,19 @@ function Section({ id, icon: Icon, title, action, children }: {
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-24">
-      <div className="mb-5 flex items-end justify-between gap-4 border-b-2 border-border pb-2">
-        <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-          <Icon className="size-6 text-primary" />
-          {title}
-        </h2>
-        {action}
-      </div>
-      {children}
-    </section>
+    // magicui BlurFade: 스크롤해서 화면에 들어올 때 섹션이 흐림→선명하게 나타남
+    <BlurFade inView inViewMargin="-80px">
+      <section id={id} className="scroll-mt-24">
+        <div className="mb-5 flex items-end justify-between gap-4 border-b-2 border-border pb-2">
+          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight">
+            <Icon className="size-6 text-primary" />
+            {title}
+          </h2>
+          {action}
+        </div>
+        {children}
+      </section>
+    </BlurFade>
   );
 }
 
@@ -38,12 +47,30 @@ function MoreLink({ href, children }: { href: string; children: React.ReactNode 
 export default function HomePage() {
   const profile = getProfile();
   const featured = getAllProjects().filter((p) => p.featured).slice(0, 4).map(toProjectMeta);
-  const recent = getAllPosts().slice(0, 5).map(toMeta);
+  const allPosts = getAllPosts();
+  const recent = allPosts.slice(0, 5).map(toMeta);
+  const projectCount = getAllProjects().length;
+  const stats = [
+    { label: "Posts", value: allPosts.length },
+    { label: "Projects", value: projectCount },
+    { label: "Tags", value: getAllTags().length },
+  ];
+  const allSkills = profile.skills.flatMap((g) => g.items);
+  // 히어로에서 순환 표시할 핵심 기술 (Skills 앞쪽 두 그룹)
+  const rotating = profile.skills.slice(0, 2).flatMap((g) => g.items).slice(0, 8);
 
   return (
     <main className="mx-auto max-w-5xl space-y-16 px-4 py-10 sm:py-16">
       {/* Hero */}
+      <BlurFade>
       <section className="card-brutal relative overflow-hidden p-6 shadow-[8px_8px_0_0_var(--border)] sm:p-10">
+        {/* magicui DotPattern 배경 (왼쪽 위에서 퍼지도록 마스크) */}
+        <DotPattern
+          width={18}
+          height={18}
+          cr={1.2}
+          className="text-foreground/25 [mask-image:radial-gradient(420px_circle_at_top_left,white,transparent)]"
+        />
         <div className="pointer-events-none absolute -top-10 -right-10 size-48 rounded-full border-2 border-border bg-accent" />
         <div className="pointer-events-none absolute right-24 -bottom-12 size-28 rounded-full border-2 border-border bg-secondary" />
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center">
@@ -65,6 +92,23 @@ export default function HomePage() {
               {profile.role}
             </p>
             <p className="mt-4 max-w-2xl text-lg">{profile.tagline}</p>
+            {rotating.length > 0 && (
+              // magicui WordRotate: 주요 기술 스택을 순서대로 보여줌
+              <p className="mt-2 flex items-center gap-2 font-mono text-sm text-muted-foreground">
+                <span>building with</span>
+                <WordRotate
+                  words={rotating}
+                  duration={2200}
+                  className="rounded-sm bg-foreground px-1.5 font-bold text-background"
+                  motionProps={{
+                    initial: { opacity: 0, y: -14 },
+                    animate: { opacity: 1, y: 0 },
+                    exit: { opacity: 0, y: 14 },
+                    transition: { duration: 0.22, ease: "easeOut" },
+                  }}
+                />
+              </p>
+            )}
             <div className="mt-5 flex flex-wrap gap-2">
               {profile.links.map((l) => (
                 <a
@@ -79,9 +123,48 @@ export default function HomePage() {
                 </a>
               ))}
             </div>
+            {/* magicui NumberTicker: 화면에 보이면 0부터 숫자가 올라감 */}
+            <dl className="mt-6 flex flex-wrap gap-3">
+              {stats.map((s) => (
+                <div key={s.label} className="rounded-md border-2 border-border bg-card px-3 py-1.5">
+                  <dt className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{s.label}</dt>
+                  <dd className="text-2xl font-bold">
+                    <NumberTicker value={s.value} className="tracking-tight text-foreground dark:text-foreground" />
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </section>
+      </BlurFade>
+
+      {/* magicui Marquee: 기술 스택 띠 (마우스를 올리면 멈춤) */}
+      {allSkills.length > 0 && (
+        <BlurFade delay={0.15}>
+          <div
+            aria-hidden="true"
+            className="relative -mt-6 overflow-hidden rounded-lg border-2 border-border bg-foreground py-1 text-background"
+          >
+            <Marquee pauseOnHover className="[--duration:45s] [--gap:0.75rem]">
+              {allSkills.map((s, i) => (
+                <span
+                  key={s}
+                  className={cn(
+                    "rounded-sm border-2 border-background/20 px-2 py-0.5 font-mono text-sm font-bold whitespace-nowrap",
+                    i % 4 === 0 && "text-accent",
+                    i % 4 === 2 && "text-secondary",
+                  )}
+                >
+                  {s}
+                </span>
+              ))}
+            </Marquee>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-foreground" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-foreground" />
+          </div>
+        </BlurFade>
+      )}
 
       {/* About */}
       <Section id="about" icon={BookOpen} title="About">

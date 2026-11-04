@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, Library } from "lucide-react";
 import type { PostMeta } from "@/lib/content";
 import { getCategory, getSubLabel } from "@/config/site";
 import { formatDate } from "@/lib/utils";
@@ -17,7 +17,10 @@ export function PostCard({ post, showCategory = false }: { post: PostMeta; showC
           )}
           {sub && <span className="rounded-sm border border-border px-1.5 py-0.5 font-semibold">{sub}</span>}
           {post.series && (
-            <span className="rounded-sm bg-accent px-1.5 py-0.5 font-semibold text-accent-foreground">📚 {post.series}</span>
+            <span className="flex items-center gap-1 rounded-sm bg-accent px-1.5 py-0.5 font-semibold text-accent-foreground">
+              <Library className="size-3" />
+              {post.series}
+            </span>
           )}
         </div>
         <h3 className="text-lg font-bold leading-snug tracking-tight">

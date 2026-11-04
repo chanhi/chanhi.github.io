@@ -1,20 +1,22 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
-import { Search } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { FileText, FolderKanban, Search } from "lucide-react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 
 type Entry = { title: string; url: string; summary: string; tags: string[]; category: string; date: string };
 
-/** Cmd/Ctrl+K 검색. 빌드 시 생성된 /search-index.json을 처음 열 때 불러온다 */
+/**
+ * Cmd/Ctrl+K 검색 (shadcn Command + Dialog).
+ * 빌드 시 생성된 /search-index.json을 처음 열 때 불러오고, 검색은 Fuse.js가 한다(cmdk 자체 필터는 끔).
+ */
 export function SearchDialog() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState<Entry[] | null>(null);
-  const [active, setActive] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,21 +25,17 @@ export function SearchDialog() {
         e.preventDefault();
         setOpen((o) => !o);
       }
-      if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   useEffect(() => {
-    if (!open) return;
-    inputRef.current?.focus();
-    if (!index) {
-      fetch("/search-index.json")
-        .then((r) => r.json())
-        .then(setIndex)
-        .catch(() => setIndex([]));
-    }
+    if (!open || index) return;
+    fetch("/search-index.json")
+      .then((r) => r.json())
+      .then(setIndex)
+      .catch(() => setIndex([]));
   }, [open, index]);
 
   const fuse = useMemo(
@@ -54,7 +52,8 @@ export function SearchDialog() {
     [index],
   );
 
-  const results = query.trim() ? fuse.search(query.trim()).slice(0, 10).map((r) => r.item) : (index ?? []).slice(0, 6);
+  const q = query.trim();
+  const results = q ? fuse.search(q).slice(0, 10).map((r) => r.item) : (index ?? []).slice(0, 6);
 
   const go = (url: string) => {
     setOpen(false);
@@ -75,52 +74,52 @@ export function SearchDialog() {
         <kbd className="hidden rounded border border-border px-1 font-mono text-[10px] md:inline">Ctrl K</kbd>
       </button>
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 px-4 pt-[12vh]" onClick={() => setOpen(false)}>
-          <div className="card-brutal w-full max-w-xl shadow-[6px_6px_0_0_var(--border)]" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center gap-2 border-b-2 border-border px-4">
-              <Search className="size-4 text-muted-foreground" />
-              <input
-                ref={inputRef}
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setActive(0);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowDown") setActive((a) => Math.min(a + 1, results.length - 1));
-                  if (e.key === "ArrowUp") setActive((a) => Math.max(a - 1, 0));
-                  if (e.key === "Enter" && results[active]) go(results[active].url);
-                }}
-                placeholder="제목, 태그, 내용으로 검색…"
-                className="h-12 flex-1 bg-transparent outline-none"
-              />
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent
+          showCloseButton={false}
+          className="top-[12vh] translate-y-0 overflow-hidden rounded-lg border-2 border-border bg-card p-0 shadow-[6px_6px_0_0_var(--border)] sm:max-w-xl"
+        >
+          <DialogTitle className="sr-only">검색</DialogTitle>
+          <DialogDescription className="sr-only">제목, 태그, 내용으로 글과 프로젝트를 검색합니다.</DialogDescription>
+          <Command shouldFilter={false} className="bg-card">
+            <div className="border-b-2 border-border [&_[data-slot=command-input-wrapper]]:h-12 [&_[data-slot=command-input-wrapper]]:border-0">
+              <CommandInput value={query} onValueChange={setQuery} placeholder="제목, 태그, 내용으로 검색…" className="text-base" />
             </div>
-            <ul className="max-h-[60vh] overflow-y-auto p-2">
-              {index === null && <li className="p-4 text-center text-sm text-muted-foreground">불러오는 중…</li>}
-              {index !== null && results.length === 0 && (
-                <li className="p-4 text-center text-sm text-muted-foreground">검색 결과가 없습니다.</li>
+            <CommandList className="max-h-[60vh] p-2">
+              {index === null ? (
+                <p className="p-4 text-center text-sm text-muted-foreground">불러오는 중…</p>
+              ) : (
+                <CommandEmpty className="p-4 text-center text-sm text-muted-foreground">검색 결과가 없습니다.</CommandEmpty>
               )}
-              {results.map((r, i) => (
-                <li key={r.url}>
-                  <button
-                    type="button"
-                    onMouseEnter={() => setActive(i)}
-                    onClick={() => go(r.url)}
-                    className={cn("w-full rounded-md px-3 py-2 text-left", i === active && "bg-muted")}
-                  >
-                    <p className="flex items-center gap-2 font-semibold">
-                      <span className="rounded-sm bg-primary px-1 text-[10px] text-primary-foreground">{r.category}</span>
-                      {r.title}
-                    </p>
-                    <p className="line-clamp-1 text-xs text-muted-foreground">{r.summary}</p>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
+              {results.length > 0 && (
+                <CommandGroup heading={q ? `검색 결과 ${results.length}건` : "최근 글"}>
+                  {results.map((r) => (
+                    <CommandItem
+                      key={r.url}
+                      value={r.url}
+                      onSelect={() => go(r.url)}
+                      className="flex items-start gap-3 rounded-md px-3 py-2 data-[selected=true]:bg-muted data-[selected=true]:text-foreground"
+                    >
+                      {r.category === "Portfolio" ? (
+                        <FolderKanban className="mt-0.5 size-4 shrink-0 text-primary" />
+                      ) : (
+                        <FileText className="mt-0.5 size-4 shrink-0 text-primary" />
+                      )}
+                      <div className="min-w-0">
+                        <p className="flex items-center gap-2 font-semibold">
+                          <span className="shrink-0 rounded-sm bg-primary px-1 text-[10px] text-primary-foreground">{r.category}</span>
+                          <span className="truncate">{r.title}</span>
+                        </p>
+                        <p className="line-clamp-1 text-xs text-muted-foreground">{r.summary}</p>
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+            </CommandList>
+          </Command>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

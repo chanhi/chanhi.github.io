@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { UserRound } from "lucide-react";
 import type { ProjectMeta } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +12,7 @@ export const projectTypeLabel: Record<ProjectMeta["type"], { label: string; clas
 export function ProjectCard({ project }: { project: ProjectMeta }) {
   const type = projectTypeLabel[project.type];
   return (
-    <article className="group card-brutal hover-lift relative flex flex-col overflow-hidden">
+    <article className="group card-brutal hover-lift relative flex w-full flex-col overflow-hidden">
       <div className="relative aspect-[16/9] border-b-2 border-border bg-muted">
         {project.thumbnail ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -35,7 +36,12 @@ export function ProjectCard({ project }: { project: ProjectMeta }) {
           </Link>
         </h3>
         <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">{project.summary}</p>
-        {project.role && <p className="mt-3 text-xs font-semibold">🧑‍💻 {project.role}</p>}
+        {project.role && (
+          <p className="mt-3 flex items-center gap-1.5 text-xs font-semibold">
+            <UserRound className="size-3.5 text-primary" />
+            {project.role}
+          </p>
+        )}
         <div className="mt-3 flex flex-wrap gap-1.5">
           {project.stack.slice(0, 6).map((s) => (
             <span key={s} className="rounded-sm border border-border bg-background px-1.5 py-0.5 font-mono text-[11px]">

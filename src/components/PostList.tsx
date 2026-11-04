@@ -6,6 +6,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { PostMeta } from "@/lib/content";
 import type { SubCategory } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { BlurFade } from "@/components/ui/blur-fade";
+import { FilterTabs } from "./FilterTabs";
 import { PostCard } from "./PostCard";
 
 type Props = {
@@ -64,29 +66,22 @@ function PostListView({ posts, subcategories = [], perPage, showCategory, sub, p
   return (
     <div>
       {tabs.length > 0 && (
-        <div className="mb-6 flex flex-wrap gap-2">
-          {[{ slug: "all", label: "전체", count: posts.length }, ...tabs].map((t) => (
-            <button
-              key={t.slug}
-              type="button"
-              onClick={() => update(t.slug, 1)}
-              className={cn(
-                "rounded-md border-2 border-border px-3 py-1 text-sm font-semibold transition-colors",
-                sub === t.slug ? "bg-foreground text-background" : "bg-card hover:bg-muted",
-              )}
-            >
-              {t.label} <span className="font-mono text-xs opacity-70">{t.count}</span>
-            </button>
-          ))}
-        </div>
+        <FilterTabs
+          tabs={[{ slug: "all", label: "전체", count: posts.length }, ...tabs].map((t) => ({ value: t.slug, label: t.label, count: t.count }))}
+          value={sub}
+          onChange={(v) => update(v, 1)}
+        />
       )}
 
       {visible.length === 0 ? (
         <p className="card-brutal p-8 text-center text-muted-foreground">아직 작성된 글이 없습니다.</p>
       ) : (
-        <div className="space-y-4">
-          {visible.map((p) => (
-            <PostCard key={p.url} post={p} showCategory={showCategory} />
+        // key로 필터·페이지가 바뀔 때마다 카드 등장 애니메이션을 다시 재생
+        <div key={`${sub}-${current}`} className="space-y-4">
+          {visible.map((p, i) => (
+            <BlurFade key={p.url} delay={Math.min(i, 8) * 0.04}>
+              <PostCard post={p} showCategory={showCategory} />
+            </BlurFade>
           ))}
         </div>
       )}

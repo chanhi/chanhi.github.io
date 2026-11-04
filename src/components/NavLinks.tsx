@@ -5,6 +5,11 @@ import { usePathname } from "next/navigation";
 import { navItems } from "@/config/site";
 import { cn } from "@/lib/utils";
 
+/**
+ * 상단 메뉴. 활성 메뉴 이동 애니메이션(animate-ui Highlight)은 쓰지 않는다.
+ * 헤더가 sticky라 페이지 이동 시 스크롤이 맨 위로 돌아가면 layoutId 애니메이션의
+ * 시작 위치가 어긋나 하이라이트가 아래에서 올라오는 문제가 있었다.
+ */
 export function NavLinks() {
   const pathname = usePathname();
   return (

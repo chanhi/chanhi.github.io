@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Calendar, ChevronRight, Clock, RefreshCw } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, ChevronRight, Clock, Library, RefreshCw } from "lucide-react";
 import { getCategory, getSubLabel } from "@/config/site";
 import { getAllPosts, getPost, getPostsByCategory, getSeries } from "@/lib/content";
 import { renderMarkdown } from "@/lib/markdown";
@@ -9,6 +9,8 @@ import { formatDate, tagHref } from "@/lib/utils";
 import { Toc } from "@/components/Toc";
 import { Mermaid } from "@/components/Mermaid";
 import { Comments } from "@/components/Comments";
+import { CodeCopyButtons } from "@/components/CodeCopyButtons";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 type Props = { params: Promise<{ category: string; slug: string }> };
 
@@ -55,6 +57,8 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="flex gap-10">
+      {/* magicui ScrollProgress: 헤더 아래에 읽기 진행률 표시 */}
+      <ScrollProgress className="top-16 z-40 h-1 bg-none bg-primary" />
       <article className="min-w-0 flex-1">
         {/* 브레드크럼 */}
         <nav aria-label="breadcrumb" className="mb-4 flex flex-wrap items-center gap-1 text-sm text-muted-foreground">
@@ -108,7 +112,8 @@ export default async function PostPage({ params }: Props) {
         {series.length > 1 && (
           <details className="card-brutal mb-8 bg-accent/20 p-4" open>
             <summary className="cursor-pointer font-bold">
-              📚 {post.series} <span className="font-mono text-sm text-muted-foreground">({series.findIndex((s) => s.url === post.url) + 1}/{series.length})</span>
+              <Library className="mr-1.5 inline size-4 align-[-2px] text-primary" />
+              {post.series} <span className="font-mono text-sm text-muted-foreground">({series.findIndex((s) => s.url === post.url) + 1}/{series.length})</span>
             </summary>
             <ol className="mt-3 list-decimal space-y-1 pl-6 text-sm">
               {series.map((s) => (
@@ -126,8 +131,9 @@ export default async function PostPage({ params }: Props) {
           </details>
         )}
 
-        <div className="prose prose-neutral dark:prose-invert" dangerouslySetInnerHTML={{ __html: html }} />
+        <div id="post-body" className="prose prose-neutral dark:prose-invert" dangerouslySetInnerHTML={{ __html: html }} />
         <Mermaid />
+        <CodeCopyButtons containerId="post-body" />
 
         {/* 이전 / 다음 글 */}
         <nav className="mt-12 grid gap-4 sm:grid-cols-2">

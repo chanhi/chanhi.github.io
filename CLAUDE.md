@@ -68,7 +68,14 @@ npm run check:sensitive -- <파일...>          # 게시 전 민감정보 검사
 
 - 테마 토큰은 `src/app/globals.css`에 있다. 원본은 사용자가 준 `index.css`이고, Tailwind v4 `@theme inline`과 shadcn 스타일 oklch 변수를 쓴다.
 - 다크 모드는 `.dark` 클래스(next-themes)로 전환한다.
-- 공통 유틸리티로 `card-brutal`(테두리 카드)과 `hover-lift`(하드 섀도우 hover)를 쓴다. shadcn 패키지는 설치하지 않았고 컴포넌트를 직접 작성한다.
+- 공통 유틸리티로 `card-brutal`(테두리 카드)과 `hover-lift`(하드 섀도우 hover)를 쓴다. 새 UI도 이 브루탈리즘 스타일(2px 테두리, 하드 섀도우)에 맞춘다.
+- **UI 컴포넌트 라이브러리**: shadcn CLI로 소스를 복사해 쓴다(`components.json`, 레지스트리 `@magicui`, `@animate-ui`). 애니메이션은 `motion`을 쓴다.
+  - `src/components/ui/`: shadcn(command, dialog)과 magicui(blur-fade, dot-pattern, word-rotate, marquee, number-ticker, scroll-progress)
+  - `src/components/animate-ui/`: animate-ui(highlight, sheet, copy button, theme-toggler). highlight는 목록 필터 탭(`FilterTabs`)에만 쓴다. sticky 헤더 메뉴에 쓰면 페이지 이동으로 스크롤이 바뀔 때 하이라이트가 아래에서 올라오는 문제가 있어 뺐다.
+  - 복사된 소스는 프로젝트 코드이므로 필요하면 고친다. 이미 고친 곳: word-rotate(`h1`→`span`, 첫 단어 즉시 표시), number-ticker(`-0` 표시 방지), dialog(animate-ui Button 의존 제거).
+  - **`npx shadcn init`은 실행하지 않는다.** `globals.css` 테마를 덮어쓴다. 컴포넌트는 `npx shadcn@latest add <이름>`으로만 추가한다.
+  - `add` 후에는 `package.json`과 import를 확인한다. 레지스트리가 `cn` 같은 불필요한 npm 패키지를 넣거나 `import { cn } from "cn"`으로 쓴 적이 있다. `cn`은 항상 `@/lib/utils`에서 가져온다.
+- 애니메이션은 `ThemeProvider`의 `MotionConfig reducedMotion="user"`로 OS의 동작 줄이기 설정을 따른다.
 
 ## 콘텐츠 작성 규칙
 
@@ -83,7 +90,7 @@ npm run check:sensitive -- <파일...>          # 게시 전 민감정보 검사
 - 커밋 메시지 접두어: `신규:` / `갱신:` (예: `갱신: CS 글 7편 공개 (draft 해제)`).
 - **frontmatter**: `title, slug(영문 권장), date, updated, subcategory, tags, aliases, series, seriesOrder, summary, thumbnail, draft, source`
   - `source`: 외부 노트에서 옮겨 온 글의 원본 경로. 다시 옮길 때 기존 포스트를 찾는 키이고, 사이트 렌더링에는 쓰지 않는다.
-  - 포트폴리오 추가 필드: `period, role, team, stack[], type(company|school|personal), github, demo, featured, order`
+  - 포트폴리오 추가 필드: `period, role, team, stack[], type(company|school|personal), github, demo, playstore(Google Play 설치 링크), featured, order`
   - 템플릿: `content/templates/post.md`
 - **이미지**: 모두 `content/assets/`에 둔다. Obsidian vault 설정(`content/.obsidian/app.json`)이 첨부 폴더를 여기로 지정한다.
 - **Excalidraw**: SVG export 파일이 `assets`에 있어야 표시된다.

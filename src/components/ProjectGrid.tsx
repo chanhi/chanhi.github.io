@@ -2,39 +2,33 @@
 
 import { useState } from "react";
 import type { ProjectMeta } from "@/lib/content";
-import { cn } from "@/lib/utils";
+import { BlurFade } from "@/components/ui/blur-fade";
+import { FilterTabs } from "./FilterTabs";
 import { ProjectCard, projectTypeLabel } from "./ProjectCard";
 
 const filters = ["all", "company", "school", "personal"] as const;
+type Filter = (typeof filters)[number];
 
 export function ProjectGrid({ projects }: { projects: ProjectMeta[] }) {
-  const [filter, setFilter] = useState<(typeof filters)[number]>("all");
+  const [filter, setFilter] = useState<Filter>("all");
   const visible = filter === "all" ? projects : projects.filter((p) => p.type === filter);
+
+  const tabs = filters
+    .map((f) => ({
+      value: f,
+      label: f === "all" ? "전체" : projectTypeLabel[f].label,
+      count: f === "all" ? projects.length : projects.filter((p) => p.type === f).length,
+    }))
+    .filter((t) => t.count > 0);
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap gap-2">
-        {filters.map((f) => {
-          const count = f === "all" ? projects.length : projects.filter((p) => p.type === f).length;
-          if (count === 0) return null;
-          return (
-            <button
-              key={f}
-              type="button"
-              onClick={() => setFilter(f)}
-              className={cn(
-                "rounded-md border-2 border-border px-3 py-1 text-sm font-semibold",
-                filter === f ? "bg-foreground text-background" : "bg-card hover:bg-muted",
-              )}
-            >
-              {f === "all" ? "전체" : projectTypeLabel[f].label} <span className="font-mono text-xs opacity-70">{count}</span>
-            </button>
-          );
-        })}
-      </div>
-      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {visible.map((p) => (
-          <ProjectCard key={p.slug} project={p} />
+      <FilterTabs tabs={tabs} value={filter} onChange={(v) => setFilter(v as Filter)} />
+      <div key={filter} className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        {visible.map((p, i) => (
+          <BlurFade key={p.slug} delay={Math.min(i, 8) * 0.05} className="flex">
+            <ProjectCard project={p} />
+          </BlurFade>
         ))}
       </div>
     </div>
