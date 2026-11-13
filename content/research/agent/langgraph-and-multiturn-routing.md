@@ -2,6 +2,7 @@
 title: LangGraph 핵심 개념과 멀티턴 대화 설계
 slug: langgraph-and-multiturn-routing
 date: 2026-07-23
+updated: 2026-11-13
 subcategory: agent
 tags: [LangGraph, 에이전트, 멀티턴, LLM]
 summary: LangGraph의 State·Node·Edge·스트리밍·체크포인터 개념과 자가 수정 루프를 정리하고, 멀티턴 대화에서 맥락과 검색을 어떻게 다룰지 생각해 봤습니다.
@@ -109,10 +110,11 @@ LangGraph로 이걸 설계한다면, 매 턴 "이 질문이 이전 대화를 이
 > - **병렬 노드 사이에는 정보 의존성이 없어야** 한다. 한 노드의 판단이 다른 노드의 결과를 필요로 한다면, 그 판단은 두 결과가 모두 모인 뒤로 옮긴다.
 > - 분기마다 **테스트 문장 표**를 만든다. 단독 턴, 후속 질문, 주제 전환처럼 상태별로 입력과 기대 분기를 적어 두면 회귀 확인이 빨라진다.
 > - 명확한 패턴은 규칙으로 먼저 거르고, 애매한 경우만 LLM 라우터에 맡기면 비용과 지연이 줄고 테스트도 쉬워진다.
+> - guardrail·router 같은 분기 판단은 자유 텍스트가 아니라 **타입 있는 답**(분기 값과 확률)으로 받으면 조건부 엣지에 그대로 연결하기 쉽다. 이런 판단만 전담하는 모델은 [[typesafe-jev-system-one-model|Jev]]에서 다뤘다.
 
 ## 정리
 
-LangGraph는 State·Node·조건부 Edge·스트리밍만 이해해도 대부분의 에이전트 흐름을 표현할 수 있습니다. 어려운 건 프레임워크가 아니라 **멀티턴에서 어떤 정보를 언제 알 수 있는지**를 설계하는 일이라고 생각합니다. 이런 그래프를 관측하는 방법은 [[langfuse-tracing-users-scores]]에 정리했습니다.
+LangGraph는 State·Node·조건부 Edge·스트리밍만 이해해도 대부분의 에이전트 흐름을 표현할 수 있습니다. 어려운 건 프레임워크가 아니라 **멀티턴에서 어떤 정보를 언제 알 수 있는지**를 설계하는 일이라고 생각합니다. 이런 그래프를 관측하는 방법은 [[langfuse-tracing-users-scores]]에 정리했습니다. 그래프 대신 Hook으로 에이전트 흐름을 짜는 다른 접근은 [[flue-agent-framework|Flue]]에서 비교해 볼 수 있습니다.
 
 ##### 참조
 - [위키독스 - LangGraph](https://wikidocs.net/293297)

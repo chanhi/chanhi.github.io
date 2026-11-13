@@ -2,6 +2,7 @@
 title: Flue — Hook으로 만드는 TypeScript AI 에이전트 프레임워크
 slug: flue-agent-framework
 date: 2026-10-20
+updated: 2026-11-13
 subcategory: agent
 tags: [Flue, 에이전트, Cloudflare, TypeScript]
 aliases: [Flue, Flue Framework]
@@ -403,3 +404,6 @@ LLM 호출 추적은 [[langfuse-tracing-users-scores|Langfuse]]를 참고하세�
 - [Routing](https://flueframework.com/docs/guide/routing/) / [Streaming Protocol](https://flueframework.com/docs/reference/streaming-protocol/) / [Agent SDK](https://flueframework.com/docs/sdk/overview/) / [React](https://flueframework.com/docs/guide/react) / [Observability](https://flueframework.com/docs/guide/observability/)
 - [Cloudflare Workers](https://developers.cloudflare.com/workers) / [Wrangler](https://developers.cloudflare.com/workers/wrangler) / [Cloudflare Sandbox 마이그레이션](https://developers.cloudflare.com/sandbox/sdk/migrate)
 - 관련 글: [[langgraph-and-multiturn-routing|LangGraph]], [[claude-code-and-skills|Claude Code와 Skills]], [[context-engineering-and-agent-automation|컨텍스트 엔지니어링과 에이전트 자동화]], [[langfuse-tracing-users-scores|Langfuse]]
+- [[hermes-agent|Hermes Agent]]: 완성형 개인용 에이전트입니다. Flue는 에이전트를 직접 만드는 프레임워크라는 점이 다릅니다.
+- [[fold-subagents-into-main-loop|서브에이전트를 메인 에이전트 루프로 합치기]]: `useSubagent`로 나누기 전에 단일 루프와 스킬로 충분한지 판단하는 기준을 다룹니다.
+- [[typesafe-jev-system-one-model|Jev]]: 에이전트 루프 대신 코드가 흐름을 쥐고 좁은 판단만 모델에 맡기는 다른 접근입니다.
