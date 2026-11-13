@@ -5,6 +5,9 @@ date: 2026-10-19
 subcategory: agent
 tags: [코딩에이전트, 에이전트, LLM, ClaudeCode]
 summary: 인라인 자동 완성에서 자율 실행 에이전트까지 코딩 도구의 세대 변화와, 일반 대화형 챗과의 구조적 차이, 도입했을 때의 변화와 주의점을 정리했습니다.
+source:
+  - "기술-연구/AI/LLM/LLM 설명 및 제품 비교.md"
+  - "기술-연구/Claude/effort에 따른 비교.md"
 ---
 
 ## LLM이 여기까지 온 과정

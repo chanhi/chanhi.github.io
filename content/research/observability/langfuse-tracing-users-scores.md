@@ -5,6 +5,10 @@ date: 2026-07-15
 subcategory: observability
 tags: [Langfuse, 관측성, 트레이싱, 사용자피드백]
 summary: Langfuse의 Trace·Observation 구조와 주요 기능, 셀프호스팅 아키텍처를 정리하고, user_id·session_id 연결과 사용자 별점 Score 연동에서 알아 둘 점을 공유합니다.
+source:
+  - "기술-연구/AI/Langfuse/Langfuse.md"
+  - "기술-연구/AI/Langfuse/Langfuse User Tracking.md"
+  - "기술-연구/AI/Langfuse/User Score.md"
 ---
 
 ## 왜 LLM 앱에 관측성이 필요한가

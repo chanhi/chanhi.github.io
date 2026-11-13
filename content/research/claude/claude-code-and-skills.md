@@ -5,6 +5,9 @@ date: 2026-10-16
 subcategory: claude
 tags: [Claude, 코딩에이전트, 스킬, MCP]
 summary: Claude Code의 CLAUDE.md·Rules·Skills·MCP·Subagents·Hooks를 언제 무엇에 쓰는지 구분하고, Anthropic 스킬 작성 가이드의 핵심을 요약했습니다.
+source:
+  - "기술-연구/Claude/Claude Code.md"
+  - "기술-연구/Claude/Claude 스킬 작성 가이드.md"
 ---
 
 ## Claude Code란

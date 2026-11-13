@@ -6,6 +6,8 @@ subcategory: llm-eval
 tags: [LLM, 평가지표, LLM-as-a-Judge, 양자화]
 series: LLM 평가
 summary: 다른 모델로 교체하거나 양자화·파인튜닝을 적용할 때, 파이프라인 전체가 아니라 LLM 자체의 변화만 떼어 내 평가하는 방법과 워크플로를 정리했습니다.
+source:
+  - "기술-연구/AI/LLM/LLM 모델 변경 평가.md"
 ---
 
 ## 무엇을 평가하고 싶은가

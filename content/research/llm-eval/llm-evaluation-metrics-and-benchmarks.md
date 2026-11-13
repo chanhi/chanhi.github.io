@@ -6,6 +6,9 @@ subcategory: llm-eval
 tags: [LLM, 평가지표, 벤치마크]
 series: LLM 평가
 summary: 비결정적인 LLM 출력을 어떻게 수치로 평가할지, 자동 지표·LLM-as-a-Judge·인간 평가와 주요 벤치마크, 그리고 벤치마크를 믿기 전에 알아야 할 함정을 정리했습니다.
+source:
+  - "기술-연구/AI/LLM/LLM 평가지표 & 벤치마크.md"
+  - "기술-연구/AI/LLM/The LLM Evaluation Guidebook.md"
 ---
 
 ## 왜 LLM 평가는 어려운가

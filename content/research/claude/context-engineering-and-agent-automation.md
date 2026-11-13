@@ -5,6 +5,10 @@ date: 2026-10-16
 subcategory: claude
 tags: [Claude, 컨텍스트엔지니어링, 에이전트자동화, 에이전트]
 summary: Anthropic의 컨텍스트 엔지니어링 글과 백그라운드 에이전트 자동화 글, 그리고 측정 기반으로 claude.ai를 개선한 사례를 겹쳐 읽고 공통 원칙을 정리했습니다.
+source:
+  - "기술-연구/Claude/새로운 컨텍스트 엔지니어링 규칙.md"
+  - "기술-연구/Claude/효과적인 에이전트 자동화 구축.md"
+  - "기술-연구/Claude/claude.ai를 2주 만에 3배 빠르게 만든 방법.md"
 ---
 
 ## 들어가며

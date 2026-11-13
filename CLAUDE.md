@@ -89,7 +89,7 @@ npm run check:sensitive -- <파일...>          # 게시 전 민감정보 검사
 - **커밋 작성자 이메일은 GitHub noreply 주소**(`61691088+chanhi@users.noreply.github.com`)다. 저장소 로컬 `git config user.email`로 설정되어 있다. 전역 설정은 회사 이메일일 수 있으므로, 새로 clone한 경우 커밋 전에 `git config user.email`을 확인하고 noreply로 설정한다.
 - 커밋 메시지 접두어: `신규:` / `갱신:` (예: `갱신: CS 글 7편 공개 (draft 해제)`).
 - **frontmatter**: `title, slug(영문 권장), date, updated, subcategory, tags, aliases, series, seriesOrder, summary, thumbnail, draft, source`
-  - `source`: 외부 노트에서 옮겨 온 글의 원본 경로. 다시 옮길 때 기존 포스트를 찾는 키이고, 사이트 렌더링에는 쓰지 않는다.
+  - `source`: 외부 노트에서 옮겨 온 글의 원본 경로. 다시 옮길 때 기존 포스트를 찾는 키이고, 사이트 렌더링에는 쓰지 않는다. 여러 노트를 합친 포스트는 YAML 목록으로 원본을 모두 적는다.
   - 포트폴리오 추가 필드: `period, role, team, stack[], type(company|school|personal), github, demo, playstore(Google Play 설치 링크), featured, order`
   - 템플릿: `content/templates/post.md`
 - **이미지**: 모두 `content/assets/`에 둔다. Obsidian vault 설정(`content/.obsidian/app.json`)이 첨부 폴더를 여기로 지정한다.

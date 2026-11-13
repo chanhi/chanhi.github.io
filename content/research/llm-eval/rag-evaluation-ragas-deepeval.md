@@ -6,6 +6,9 @@ subcategory: llm-eval
 tags: [RAG평가, RAGAS, DeepEval, 평가지표]
 series: LLM 평가
 summary: 검색과 생성을 분리해 원인을 찾는 RAGAS의 네 가지 지표와, LLM 평가를 pytest처럼 다루는 DeepEval의 메트릭 개념을 정리했습니다.
+source:
+  - "기술-연구/AI/LLM/RAGAS를 이용한 RAG 평가.md"
+  - "기술-연구/AI/LLM/DeepEval을 이용한 자동 평가.md"
 ---
 
 ## RAG는 왜 따로 평가해야 하나

@@ -7,6 +7,8 @@ tags: [AAS, OPC-UA, 디지털트윈, 온톨로지]
 series: 온톨로지
 seriesOrder: 3
 summary: 물리 자산의 디지털 신분증인 AAS(Asset Administration Shell)의 구성요소와, 실시간 통신 표준 OPC UA와 역할을 나눠 연계하는 방식을 정리했습니다.
+source:
+  - "기술-연구/온톨로지/AAS(Asset Administration Shell).md"
 ---
 
 ## AAS란

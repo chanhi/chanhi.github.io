@@ -5,6 +5,9 @@ date: 2026-07-23
 subcategory: agent
 tags: [LangGraph, 에이전트, 멀티턴, LLM]
 summary: LangGraph의 State·Node·Edge·스트리밍·체크포인터 개념과 자가 수정 루프를 정리하고, 멀티턴 대화에서 맥락과 검색을 어떻게 다룰지 생각해 봤습니다.
+source:
+  - "기술-연구/AI/LangGraph.md"
+  - "기술-연구/AI/LLM/LLM Multi-turn.md"
 ---
 
 ## LangGraph 한 줄 요약

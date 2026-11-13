@@ -6,6 +6,9 @@ subcategory: llm-eval
 tags: [LLM-as-a-Judge, 자동평가, 평가설계, 힐클라이밍]
 series: LLM 평가
 summary: judge 모델을 고를 때 걸러야 할 후보, Anthropic이 정리한 좋은 평가의 조건과 채점기 검증법, 그리고 평가 점수를 올리면서 과적합을 피하는 방법을 정리했습니다.
+source:
+  - "기술-연구/AI/Langfuse/LLM-as-a-Judge.md"
+  - "기술-연구/Claude/Claude로 평가 설계와 힐클라이밍 자동화하기.md"
 ---
 
 ## LLM-as-a-Judge 복습
